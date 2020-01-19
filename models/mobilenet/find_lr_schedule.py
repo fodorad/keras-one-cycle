@@ -76,6 +76,7 @@ lr_finder = LRFinder(num_samples, batch_size, minimum_lr=1e-3, maximum_lr=10.,
 # plot the previous values if present
 LRFinder.plot_schedule_from_file('weights/', clip_beginning=10, clip_endding=5)
 
+
 # For training, the auxilary branch must be used to correctly train NASNet
 
 model = MiniMobileNetV2((img_rows, img_cols, img_channels), alpha=1.4,

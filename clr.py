@@ -1,9 +1,10 @@
 import os
-import numpy as np
 import warnings
+import numpy as np
+from pathlib import Path
 
-from keras.callbacks import Callback
 from keras import backend as K
+from keras.callbacks import Callback
 
 
 # Code is ported from https://github.com/fastai/fastai
@@ -467,11 +468,13 @@ class LRFinder(Callback):
             losses = losses[:clip_endding]
             lrs = lrs[:clip_endding]
 
+        plt.figure()
         plt.plot(lrs, losses)
         plt.title('Learning rate vs Loss')
         plt.xlabel('learning rate')
         plt.ylabel('loss')
         plt.show()
+        plt.savefig(str(Path(save_dir) / 'lr_finder.png'))
 
     @classmethod
     def restore_schedule_from_dir(cls,
@@ -503,6 +506,7 @@ class LRFinder(Callback):
         losses_path = os.path.join(directory, 'losses.npy')
         lrs_path = os.path.join(directory, 'lrs.npy')
 
+        print(losses_path, lrs_path)
         if not os.path.exists(losses_path) or not os.path.exists(lrs_path):
             print("%s and %s could not be found at directory : {%s}" %
                   (losses_path, lrs_path, directory))
@@ -558,11 +562,13 @@ class LRFinder(Callback):
         if losses is None or lrs is None:
             return
         else:
+            plt.figure()
             plt.plot(lrs, losses)
             plt.title('Learning rate vs Loss')
             plt.xlabel('learning rate')
             plt.ylabel('loss')
             plt.show()
+            plt.savefig(str(Path(directory) / 'lr_finder_from_file.png'))
 
     @property
     def lrs(self):

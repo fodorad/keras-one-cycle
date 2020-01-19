@@ -6,6 +6,7 @@ from __future__ import print_function
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 from keras.datasets import cifar10
 from keras.preprocessing.image import ImageDataGenerator
@@ -53,10 +54,10 @@ X_test = (X_test - mean) / (std)
 num_samples = X_train.shape[0]
 
 # INITIAL WEIGHT DECAY FACTORS
-# WEIGHT_DECAY_FACTORS = [1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
+WEIGHT_DECAY_FACTORS = [1e-5, 1e-7, 3e-5, 3e-6]
 
 # FINEGRAINED WEIGHT DECAY FACTORS
-WEIGHT_DECAY_FACTORS = [1e-7, 3e-7, 3e-6]
+# WEIGHT_DECAY_FACTORS = [1e-7, 3e-7, 3e-6]
 
 # for weight_decay in WEIGHT_DECAY_FACTORS:
 #     K.clear_session()
@@ -121,6 +122,8 @@ WEIGHT_DECAY_FACTORS = [1e-7, 3e-7, 3e-6]
 # from plot we see, the model isnt impacted by the weight_decay very much at all
 # so we can use any of them.
 
+save_dir = Path('./weights')
+plt.figure()
 for weight_decay in WEIGHT_DECAY_FACTORS:
     directory = 'weights/weight_decay/weight_decay-%s/' % str(weight_decay)
 
@@ -132,3 +135,4 @@ plt.xlabel("Learning rate")
 plt.ylabel("Validation Loss")
 plt.legend()
 plt.show()
+plt.savefig(str(save_dir / 'wd_finder_from_file.png'))

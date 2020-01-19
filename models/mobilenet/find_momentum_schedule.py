@@ -6,6 +6,7 @@ from __future__ import print_function
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 from keras.datasets import cifar10
 from keras.preprocessing.image import ImageDataGenerator
@@ -115,6 +116,8 @@ MOMENTUMS = [0.9, 0.95, 0.99]
 # from plot we see, the model isnt impacted by the weight_decay very much at all
 # so we can use any of them.
 
+save_dir = Path('./weights')
+plt.figure()
 for momentum in MOMENTUMS:
     directory = 'weights/momentum/momentum-%s/' % str(momentum)
 
@@ -126,3 +129,5 @@ plt.xlabel("Learning rate")
 plt.ylabel("Validation Loss")
 plt.legend()
 plt.show()
+plt.savefig(str(save_dir / 'momentum_finder_from_file.png'))
+

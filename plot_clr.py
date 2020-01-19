@@ -14,6 +14,7 @@ NUM_SAMPLES = 2000
 NUM_EPOCHS = 100
 BATCH_SIZE = 500
 MAX_LR = 0.1
+save_dir = './'
 
 # Data
 X = np.random.rand(NUM_SAMPLES, 10)
@@ -36,15 +37,19 @@ model.fit(X, Y, batch_size=BATCH_SIZE, epochs=NUM_EPOCHS, callbacks=[clr_triangu
 print("LR Range : ", min(clr_triangular.history['lr']), max(clr_triangular.history['lr']))
 print("Momentum Range : ", min(clr_triangular.history['momentum']), max(clr_triangular.history['momentum']))
 
-
+plt.figure()
 plt.xlabel('Training Iterations')
 plt.ylabel('Learning Rate')
 plt.title("CLR")
 plt.plot(clr_triangular.history['lr'])
 plt.show()
+plt.savefig(str(Path(save_dir) / '1cycle_lr.png'))
 
+plt.figure()
 plt.xlabel('Training Iterations')
 plt.ylabel('Momentum')
 plt.title("CLR")
 plt.plot(clr_triangular.history['momentum'])
 plt.show()
+plt.savefig(str(Path(save_dir) / '1cycle_momentum.png'))
+
