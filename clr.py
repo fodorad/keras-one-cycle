@@ -10,6 +10,8 @@ from keras.callbacks import Callback
 # Code is ported from https://github.com/fastai/fastai
 class OneCycleLR(Callback):
     def __init__(self,
+                 samples,
+                 batch_size,
                  max_lr,
                  end_percentage=0.1,
                  scale_percentage=None,
@@ -68,8 +70,8 @@ class OneCycleLR(Callback):
         self.history = {}
 
         self.epochs = None
-        self.batch_size = None
-        self.samples = None
+        self.batch_size = batch_size # None
+        self.samples = samples # None
         self.steps = None
         self.num_iterations = None
         self.mid_cycle_id = None
@@ -147,8 +149,8 @@ class OneCycleLR(Callback):
         logs = logs or {}
 
         self.epochs = self.params['epochs']
-        self.batch_size = self.params['batch_size']
-        self.samples = self.params['samples']
+        # self.batch_size = self.params['batch_size']
+        # self.samples = self.params['samples']
         self.steps = self.params['steps']
 
         if self.steps is not None:
@@ -474,7 +476,7 @@ class LRFinder(Callback):
         plt.xlabel('learning rate')
         plt.ylabel('loss')
         plt.show()
-        plt.savefig(str(Path(save_dir) / 'lr_finder.png'))
+        plt.savefig(str(Path(self.save_dir) / 'lr_finder.png'))
 
     @classmethod
     def restore_schedule_from_dir(cls,
