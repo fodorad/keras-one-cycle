@@ -3,8 +3,9 @@ import warnings
 import numpy as np
 from pathlib import Path
 
-from keras import backend as K
-from keras.callbacks import Callback
+import tensorflow as tf
+import tensorflow.keras.backend as K
+from tensorflow.keras.callbacks import Callback
 
 
 # Code is ported from https://github.com/fastai/fastai
